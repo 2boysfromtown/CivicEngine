@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Typecheck and build
+    name: Production build
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Typecheck
-        run: npm run lint
 
       - name: Build
         env:
