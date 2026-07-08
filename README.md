@@ -47,6 +47,7 @@ We have compiled a professional **12-slide landscape presentation** explaining t
 ## 🔗 Working Prototype Link
 
 *   **Live Web Frontend**: [https://civicengine-2026.web.app](https://civicengine-2026.web.app) *(Deployed via Firebase Hosting)*
+*   **Live Full-Stack Backend**: [https://civicengine.onrender.com](https://civicengine.onrender.com) *(Deployed via Render, supporting WebSockets)*
 
 ---
 
