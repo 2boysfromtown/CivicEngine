@@ -1,7 +1,7 @@
 {
-  "name": "react-example",
+  "name": "civicengine",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
@@ -9,7 +9,10 @@
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist dist-server",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "node test-e2e.js",
+    "ci": "npm run build"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
