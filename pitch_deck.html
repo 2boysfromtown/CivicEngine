@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicEngine Pitch Deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --color-bg: #fbf9f6;
+      --color-primary: #1e293b;
+      --color-accent: #9e7b44;
+      --color-accent-light: #f5f0e8;
+      --color-text: #0f172a;
+      --color-text-muted: #475569;
+      --color-success: #16a34a;
+      --color-danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: #e2e8f0;
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Slides structure */
+    .slide {
+      width: 297mm;
+      height: 210mm;
+      background-color: var(--color-bg);
+      padding: 20mm;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      margin: 20px auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+    }
+
+    /* Page breaks for PDF printing */
+    @media print {
+      body {
+        background-color: transparent;
+      }
+      .slide {
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-after: always;
+      }
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--color-accent-light);
+      padding-bottom: 5mm;
+    }
+
+    .slide-logo {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-logo span {
+      color: var(--color-accent);
+    }
+
+    .slide-number {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--color-accent);
+      background-color: var(--color-accent-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* Slide Content */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10mm 0;
+    }
+
+    .slide-title {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 36px;
+      color: var(--color-primary);
+      margin-bottom: 6mm;
+      line-height: 1.2;
+    }
+
+    .slide-title span {
+      color: var(--color-accent);
+    }
+
+    .slide-subtitle {
+      font-size: 18px;
+      color: var(--color-text-muted);
+      max-width: 800px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--color-accent-light);
+      padding-top: 4mm;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    /* Layout Utilities */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12mm;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8mm;
+    }
+
+    .card {
+      background-color: white;
+      padding: 6mm;
+      border-radius: 12px;
+      border: 1px solid var(--color-accent-light);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      transition: all 0.3s ease;
+    }
+
+    .card-title {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-primary);
+      margin-bottom: 3mm;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-text {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-success { background-color: #dcfce7; color: #15803d; }
+    .badge-warning { background-color: #fef3c7; color: #b45309; }
+    .badge-danger { background-color: #fee2e2; color: #b91c1c; }
+    .badge-accent { background-color: var(--color-accent-light); color: var(--color-accent); }
+
+    /* Bullet List */
+    .bullets {
+      list-style-type: none;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 8mm;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text-muted);
+      margin-bottom: 4mm;
+    }
+
+    .bullets li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--color-accent);
+      font-size: 20px;
+    }
+
+    /* Title Slide Specifics */
+    .slide-title-page {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide-title-page .title-container {
+      max-width: 850px;
+    }
+
+    .slide-title-page h1 {
+      font-family: var(--font-title);
+      font-size: 54px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 4mm;
+      background: linear-gradient(to right, #ffffff, #d0b380);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-title-page h2 {
+      font-size: 22px;
+      color: #94a3b8;
+      font-weight: 400;
+      margin-bottom: 8mm;
+    }
+
+    .slide-title-page .meta-pills {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .slide-title-page .pill {
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: var(--color-accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--color-accent);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-title-page">
+    <div class="title-container">
+      <div style="font-size: 50px; margin-bottom: 10px;">🛡️</div>
+      <h1>CivicEngine</h1>
+      <h2>AI-Powered Multimodal Indian Municipal Grievance Resolution Center</h2>
+      <div style="width: 80px; height: 3px; background-color: var(--color-accent); margin: 6mm auto 8mm auto;"></div>
+      <div class="meta-pills">
+        <div class="pill">Google Code for Community 2026</div>
+        <div class="pill">India Civic Tech Hackathon Submission</div>
+        <div class="pill">Empowering Citizens & Wards</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE PROBLEM -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">02</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">The Civic Grievance <span>Bottleneck</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Language Barriers:</strong> Traditional portals require text entry in standard English/Hindi, excluding millions of regional-language speakers.</li>
+          <li><strong>Mismatched Ward Routing:</strong> General citizen complaints route to centralized queues instead of local ward officers, leading to massive SLA delays.</li>
+          <li><strong>Redundant Duplicates:</strong> Dozens of citizens report the same pothole or heap, causing administrative noise and database bloat.</li>
+          <li><strong>Lack of Real-world Action:</strong> Delayed complaints rotting in lists leave citizens powerless without a legal follow-up receipt.</li>
+        </ul>
+        <div class="grid-3" style="grid-template-columns: 1fr; gap: 4mm;">
+          <div class="card" style="border-left: 4px solid var(--color-danger);">
+            <div class="card-title">🚨 The Citizen Slop</div>
+            <p class="card-text">Clunky text forms, manual drop-down ward selections, and no voice-based assistance lead to drop-offs.</p>
+          </div>
+          <div class="card" style="border-left: 4px solid var(--color-danger);">
+            <div class="card-title">📉 Operational Overhead</div>
+            <p class="card-text">Ward officers are flooded with identical duplicate reports, requiring manual review and sorting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 2 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: THE SOLUTION -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">03</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">The <span>CivicEngine</span> Framework</h2>
+      <p class="slide-subtitle" style="margin-bottom: 6mm;">Bridging community needs with legal power and advanced AI. An end-to-end PWA & Android app designed to process civic issues seamlessly at the ward level.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon-box">🗣️</div>
+          <div class="card-title" style="margin-top: 3mm;">Multimodal Voice Intake</div>
+          <p class="card-text">AI Live Operators converse in Hindi, Tamil, Telugu, Kannada, or English. Transcribes, translates, and filters spam instantly.</p>
+        </div>
+        <div class="card">
+          <div class="icon-box">📍</div>
+          <div class="card-title" style="margin-top: 3mm;">Ward-Level Routing</div>
+          <p class="card-text">GPS locations map to exact municipal boundaries via ISRO Bhuvan/OSM. High-priority queues auto-calculate urgencies.</p>
+        </div>
+        <div class="card">
+          <div class="icon-box">⚖️</div>
+          <div class="card-title" style="margin-top: 3mm;">Legal RTI Empowerment</div>
+          <p class="card-text">Generates a pre-filled RTI Act 2005 receipt for delayed cases, enabling citizens to legally question PIOs.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 3 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: MULTILINGUAL VOICE OPERATOR -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">04</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Gemini Live <span>Voice Assistant</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Background Thread AudioWorklet:</strong> Migrated from deprecated thread-blocking ScriptProcessors to AudioWorklets, ensuring zero microphone lag on mobile.</li>
+          <li><strong>Speech Modality (Zephyr):</strong> Direct connection using Gemini's live audio interface. Speaks like an empathetic emergency operator.</li>
+          <li><strong>Direct Tool Integration:</strong> Gemini queries details and calls the <code>submit_report</code> tool function seamlessly once it has category, severity, and location.</li>
+          <li><strong>Full i18n Core:</strong> Auto-transcribes from 5 languages, outputting clean English summaries for officers.</li>
+        </ul>
+        <div class="card" style="background-color: var(--color-accent-light); padding: 8mm;">
+          <div class="badge badge-success" style="margin-bottom: 3mm;">Live Demo Session Config</div>
+          <p style="font-size: 14px; font-weight: bold; margin-bottom: 2mm; color: var(--color-primary);">"Converse in Citizen's Local Language..."</p>
+          <p style="font-size: 13px; color: var(--color-text-muted); line-height: 1.6; font-style: italic;">
+            "Namaste/Vanakkam, I am your CivicEngine Operator. Please tell me what issue you are facing and your nearby landmarks..."
+          </p>
+          <div style="margin-top: 4mm; font-size: 11px; font-family: monospace; color: var(--color-accent); font-weight: 700;">
+            MODEL: gemini-2.0-flash-exp (WebSockets)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 4 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: GEOLOCATION & WARD DETECTOR -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">05</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Precise Location <span>Routing</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Local Boundaries cache:</strong> Point-in-polygon mapping of coordinates against DataMeet shape files for India.</li>
+          <li><strong>OpenStreetMap Overpass Boundary Resolution:</strong> Fallback query resolving administrative boundaries at <code>admin_level=10</code> (Ward level in Indian Municipalities).</li>
+          <li><strong>Google Maps Geocoding API:</strong> Last-resort fallback for neighborhoods and sublocalities.</li>
+          <li><strong>Geohash Indexing:</strong> Real-time Firestore geohashes for high-performance spatial querying.</li>
+        </ul>
+        <div class="card" style="border: 2px dashed var(--color-accent); padding: 8mm;">
+          <div class="card-title" style="color: var(--color-accent);">📍 Ward Boundary Resolver API</div>
+          <p class="card-text" style="font-family: monospace; font-size: 12px; margin-bottom: 2mm;">POST /api/detect-ward</p>
+          <p class="card-text" style="line-height: 1.5; font-size: 12px;">
+            Input: <code>{ latitude: 12.971, longitude: 77.594 }</code><br>
+            Output: <br>
+            <code>{ ward: "Sampangiram Nagar", wardId: "osm_relation_12345", municipality: "BBMP", state: "Karnataka" }</code>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 5 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: HIGH-SCALABILITY BACKEND -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">06</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Scalable Async <span>AI Queue Worker</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Instantly Non-Blocking:</strong> Citizens receive a tracking number in &lt;100ms. The heavy AI analysis runs asynchronously in a worker thread.</li>
+          <li><strong>Rate Limit Defense:</strong> Handles Gemini <code>429 Quota Exceeded</code> using backoffs, preventing request thread starvation.</li>
+          <li><strong>Regex Fallback Triager:</strong> If API limits are exhausted, fallbacks auto-categorize issues, keeping the platform 100% operational.</li>
+          <li><strong>Background Asset Sync:</strong> Stores and parses media buffers directly from GCS/local data URIs.</li>
+        </ul>
+        <div class="card" style="background-color: white; border-top: 4px solid var(--color-accent); padding: 6mm;">
+          <div class="card-title">⚙️ Queue Workflow</div>
+          <div style="display: flex; gap: 4px; align-items: center; justify-content: space-between; font-size: 11px; font-weight: bold; margin-top: 2mm;">
+            <div style="background-color: #eff6ff; padding: 6px; border-radius: 6px; text-align: center; flex: 1;">Citizen Submits</div>
+            <div style="color: var(--color-accent);">➔</div>
+            <div style="background-color: #fef3c7; padding: 6px; border-radius: 6px; text-align: center; flex: 1;">Placeholder Ingest (&lt;100ms)</div>
+            <div style="color: var(--color-accent);">➔</div>
+            <div style="background-color: #f5f0e8; padding: 6px; border-radius: 6px; text-align: center; flex: 1;">Async Queue Worker</div>
+            <div style="color: var(--color-accent);">➔</div>
+            <div style="background-color: #dcfce7; padding: 6px; border-radius: 6px; text-align: center; flex: 1;">Gemini Analysis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 6 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: SEMANTIC DUPLICATE PREVENTION -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">07</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Semantic Duplicate <span>Prevention</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Ward Pre-Filtering:</strong> Fetches active issues in the same category & ward first, avoiding expensive global database queries.</li>
+          <li><strong>AI Similarity Checker:</strong> Gemini reviews active complaints and compares location details to detect matches.</li>
+          <li><strong>Auto-Upvote Conversion:</strong> If matched, the new report is merged. The original issue is automatically upvoted and re-ranked.</li>
+          <li><strong>Real-time UX Redirect:</strong> Citizen gets an overlay: <i>"Duplicate report resolved! Upvoted existing case Reference: CE/..."</i></li>
+        </ul>
+        <div class="card" style="border-left: 4px solid var(--color-success);">
+          <div class="card-title">✅ Operational Efficiency</div>
+          <p class="card-text" style="font-size: 12px; margin-bottom: 2mm;">Instead of 50 separate tickets for one open manhole, authorities get <strong>one ticket with 50 upvotes</strong>, pushing it instantly to the top of the urgency queue.</p>
+          <div class="badge badge-success">Saves 90% Triage Time</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 7 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: LEGAL RTI DRAFT RECEIPT -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">08</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">RTI Act 2005 <span>Legal Integration</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Citizen Legal Power:</strong> Pre-filled RTI application drafts are generated for overdue or unresolved complaints.</li>
+          <li><strong>Section 6(1) Pre-formatting:</strong> Automates standard Indian RTI structures, referencing Public Information Officer (PIO) offices.</li>
+          <li><strong>Pre-populated Case Metrics:</strong> Inserts GPS coordinates, category, reported date, tracking ID, and delay timeline logs.</li>
+          <li><strong>Direct Receipt Download:</strong> Compiles a ready-to-print text receipt document in one click.</li>
+        </ul>
+        <div class="card" style="background-color: #fefaf0; border: 1px solid #f5d0a9; padding: 6mm;">
+          <div class="badge badge-warning" style="margin-bottom: 2mm;">Legal Appeal Draft</div>
+          <p style="font-size: 11px; font-family: monospace; color: var(--color-text-muted); line-height: 1.5;">
+            "To, The Public Information Officer (PIO)...<br>
+            Subject: Request for Information under Sec 6(1) of RTI Act 2005.<br>
+            Particulars of grievance: ID CE/2026/07/00042.<br>
+            Please provide: (1) Files notes and logs on resolution action. (2) Budget allocated for this category in Ward 4."
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 8 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: ANDROID NATIVE & MOBILE UX -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">09</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Android Native <span>App Wrapper</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Capacitor Native Integration:</strong> The entire React PWA is packaged inside a native Android Studio Gradle project (located in <code>/android</code>).</li>
+          <li><strong>Offline Synchronization:</strong> Built web assets sync straight to local assets, allowing instant app boots.</li>
+          <li><strong>Responsive Sandalwood Theme:</strong> Premium styling following WCAG 2.1 AA accessible contrast guides.</li>
+          <li><strong>Real-time Leaflet Maps:</strong> Fully optimized touch gestures for locating nearby municipal issues and boundaries.</li>
+        </ul>
+        <div class="grid-3" style="grid-template-columns: 1fr; gap: 4mm;">
+          <div class="card">
+            <div class="card-title">📱 Android APK</div>
+            <p class="card-text">Generated project ready for release build, launching via Capacitor Native Bridges.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📶 Offline Ready</div>
+            <p class="card-text">Fully functional PWA manifest and service workers cache local assets and queue drafts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 9 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: TECH STACK & CLOUD ARCHITECTURE -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">10</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Google Cloud & <span>Stack Overview</span></h2>
+      <p class="slide-subtitle" style="margin-bottom: 5mm;">A robust, modern full-stack architecture built to scale to lakhs of users.</p>
+      <div class="grid-2">
+        <div class="card" style="padding: 5mm;">
+          <div class="card-title">🛠️ Frontend & Mobile</div>
+          <p class="card-text" style="font-size: 12px; line-height: 1.8;">
+            • <strong>Core:</strong> React, TypeScript, Vite, Tailwind CSS<br>
+            • <strong>Mapping:</strong> Leaflet JS, OpenStreetMap Nominatim<br>
+            • <strong>Voice:</strong> Web Audio API, AudioWorklets<br>
+            • <strong>Mobile Wrapper:</strong> Capacitor SDK (Android Platform Gradle Project)
+          </p>
+        </div>
+        <div class="card" style="padding: 5mm;">
+          <div class="card-title">☁️ Backend & AI (GCP asia-south1)</div>
+          <p class="card-text" style="font-size: 12px; line-height: 1.8;">
+            • <strong>Server:</strong> Node.js, Express, tsx (WebSocket Server)<br>
+            • <strong>AI Engine:</strong> @google/genai SDK (Gemini 2.5 Flash, Gemini 2.0 Live)<br>
+            • <strong>Database:</strong> Google Cloud Firestore (asia-south1 region)<br>
+            • <strong>Storage & Auth:</strong> Firebase Client/Admin Auth, Google Cloud Storage
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 10 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: SOCIAL IMPACT & TRANSPARENCY -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">11</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Social Impact & <span>Governance</span></h2>
+      <div class="grid-3">
+        <div class="card" style="border-top: 4px solid var(--color-success);">
+          <div class="card-title" style="color: var(--color-success);">🇮🇳 Regional Inclusion</div>
+          <p class="card-text">Empowers rural and urban citizens to file reports verbally in native dialects. Overcomes reading and writing constraints.</p>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--color-success);">
+          <div class="card-title" style="color: var(--color-success);">📊 Transparency Logs</div>
+          <p class="card-text">All status updates and department reallocations log public audit histories, preventing official neglect.</p>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--color-success);">
+          <div class="card-title" style="color: var(--color-success);">💸 Public Budget Check</div>
+          <p class="card-text">Enables citizens to inspect allocated infrastructure budgets when filing complaints, promoting accountability.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 11 of 12</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: ROADMAP & FUTURE VISION -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="slide-logo">Civic<span>Engine</span></div>
+      <div class="slide-number">12</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Roadmap & <span>Future Vision</span></h2>
+      <div class="grid-2">
+        <ul class="bullets">
+          <li><strong>Municipal Integration:</strong> Standard pilots with BBMP (Bengaluru), GCC (Chennai), and BMC (Mumbai) public grievance cells.</li>
+          <li><strong>ISRO Bhuvan Integration:</strong> Transitioning boundary resolution to India's satellite mapping layers.</li>
+          <li><strong>RTI Digitization:</strong> Direct API connection to central/state RTI portals for single-click official online filing.</li>
+          <li><strong>Community UPI Rewards:</strong> Crowdsourced verify-and-cleanup incentives with mock micro-transactions.</li>
+        </ul>
+        <div class="card" style="background-color: var(--color-primary); color: white; padding: 8mm; text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 2mm;">🇮🇳</div>
+          <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 2mm; color: var(--color-accent);">Code for Community</h3>
+          <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">"Building technology that bridges legal rights, native communication, and state-of-the-art AI to transform Indian civic administration."</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Google Code for Community India</div>
+      <div>Slide 12 of 12</div>
+    </div>
+  </div>
+
+</body>
+</html>
