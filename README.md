@@ -44,6 +44,12 @@ We have compiled a professional **12-slide landscape presentation** explaining t
 
 ---
 
+## 🔗 Working Prototype Link
+
+*   **Live Web Frontend**: [https://civicengine-2bft.web.app](https://civicengine-2bft.web.app) *(Deployed via Firebase Hosting)*
+
+---
+
 ## 🚀 Running Locally & E2E Validation
 
 ### 1. Prerequisite Configuration
