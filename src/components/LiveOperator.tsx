@@ -52,9 +52,18 @@ export default function LiveOperator({
       const token = localStorage.getItem('civicengine_token') || '';
       const lat = location ? location[0] : 12.687;
       const lng = location ? location[1] : 78.615;
-      let wsUrl = `wss://${window.location.host}/live?language=${language}&token=${token}&lat=${lat}&lng=${lng}`;
-      if (window.location.protocol === 'http:') {
-        wsUrl = `ws://${window.location.host}/live?language=${language}&token=${token}&lat=${lat}&lng=${lng}`;
+      
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+      let wsUrl = '';
+      if (backendUrl) {
+        const host = backendUrl.replace(/^(https?|wss?):\/\//, '');
+        const isSecure = backendUrl.startsWith('https') || window.location.protocol === 'https:';
+        wsUrl = `${isSecure ? 'wss' : 'ws'}://${host}/live?language=${language}&token=${token}&lat=${lat}&lng=${lng}`;
+      } else {
+        wsUrl = `wss://${window.location.host}/live?language=${language}&token=${token}&lat=${lat}&lng=${lng}`;
+        if (window.location.protocol === 'http:') {
+          wsUrl = `ws://${window.location.host}/live?language=${language}&token=${token}&lat=${lat}&lng=${lng}`;
+        }
       }
 
       wsRef.current = new WebSocket(wsUrl);
