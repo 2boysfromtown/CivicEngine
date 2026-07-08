@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CivicEngine</string>
+    <string name="title_activity_main">CivicEngine</string>
+    <string name="package_name">com.civicengine.app</string>
+    <string name="custom_url_scheme">com.civicengine.app</string>
+</resources>

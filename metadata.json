@@ -1,0 +1,1 @@
+{"name":"CivicEngine","description":"Real-time multimodal civic agent and authority dashboard for municipal intelligence.","requestFramePermissions":["microphone","geolocation"],"majorCapabilities":["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]}

@@ -1,0 +1,16 @@
+{
+  "short_name": "CivicEngine",
+  "name": "CivicEngine Grievance Portal",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "48x48 72x72 96x96 128x128 256x256"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#fbf9f6",
+  "theme_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait"
+}

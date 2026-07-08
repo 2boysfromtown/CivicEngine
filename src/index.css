@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-sandalwood-50: #fbf9f6;
+  --color-sandalwood-100: #f5f0e8;
+  --color-sandalwood-200: #eadfc9;
+  --color-sandalwood-300: #decba5;
+  --color-sandalwood-400: #d0b380;
+  --color-sandalwood-500: #9e7b44; /* Darkened slightly to improve contrast */
+  --color-sandalwood-600: #8a6830; /* Darkened from #b88a50 to pass WCAG 2.1 AA 4.5:1 contrast */
+  --color-sandalwood-700: #7d5934; /* Darkened from #9a6f43 */
+  --color-sandalwood-800: #694b2a;
+  --color-sandalwood-900: #553c21;
+  --color-sandalwood-950: #2d1f11;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-sandalwood-50);
+  color: #000000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility focus visible styles */
+*:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* Prefers reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

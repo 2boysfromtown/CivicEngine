@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Check if user is logged in
+    function loggedIn() {
+      return request.auth != null;
+    }
+
+    // Role helpers
+    function getRole() {
+      return request.auth.token.role;
+    }
+    
+    function isCitizen() {
+      return loggedIn() && getRole() == 'citizen';
+    }
+
+    function isAuthority() {
+      return loggedIn() && getRole() == 'authority';
+    }
+
+    function isAdmin() {
+      return loggedIn() && getRole() == 'admin';
+    }
+
+    // Match issues
+    match /issues/{issueId} {
+      allow read: if loggedIn();
+      allow create: if isCitizen() || isAuthority();
+      // Authority can write only to issues in their assigned ward
+      allow update: if isAdmin() || (isAuthority() && request.auth.token.wardId == resource.data.wardId) || (isCitizen() && resource.data.reportedBy == request.auth.uid);
+      allow delete: if isAdmin();
+    }
+
+    // Match projects
+    match /projects/{projectId} {
+      allow read: if loggedIn();
+      allow write: if isAuthority() || isAdmin();
+    }
+
+    // Match users
+    match /users/{userId} {
+      allow read: if loggedIn();
+      allow write: if request.auth.uid == userId || isAdmin();
+    }
+
+    // Match counters
+    match /counters/{counterId} {
+      allow read, write: if loggedIn(); // Allow increment operations from authenticated users/server
+    }
+
+    // Match audit log (Server write only, read by authorities)
+    match /auditLog/{logId} {
+      allow read: if isAuthority() || isAdmin();
+      allow write: if false; // Only cloud backend/server-side admin sdk can write
+    }
+
+    // Match wards cache
+    match /wards/{wardId} {
+      allow read: if loggedIn();
+      allow write: if isAuthority() || isAdmin();
+    }
+  }
+}
